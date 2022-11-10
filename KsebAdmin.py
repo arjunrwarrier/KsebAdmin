@@ -1,6 +1,7 @@
 import mysql.connector
 from datetime import datetime
 import random
+from tabulate import tabulate
 
 mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'ksebdb')
 
@@ -85,7 +86,6 @@ while(True):
 
         for i in result:
             conId = str(i[0])
-            print(conId)
             sql = "select SUM(`unit`) from usages where month(datetime) = '"+currentMonth+"' AND year(datetime) = '"+currentYear+"' AND `consumerid` ="+conId
             mycursor.execute(sql)
             result = mycursor.fetchone()
@@ -106,6 +106,13 @@ while(True):
             
     elif(choice == 7):
         print("View Bill selected")
+
+        sql = "SELECT  b.`consumerid`, b.`month`, b.`year`, b.`bill`, b.`paidstatus`, b.`billdate`, b.`totalunit`, b.`duedate`, b.`invoice`,c.consumerCode,c.consumerName FROM `bill` b JOIN consumer c ON b.consumerid=c.id"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        # for i in result:
+        #     print(i)
+        print(tabulate(result,headers=["ConsumerID","Month","Year","Bill","PaidStatus","BillDate","TotalUnit","DueDate","Invoice","ConsumerCode","ConsumerName"],tablefmt="psql"))
         
     elif(choice == 8):
         print("Exit")
