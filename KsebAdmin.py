@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import datetime
 
 mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'ksebdb')
 
@@ -65,6 +66,33 @@ while(True):
             print(i)
     elif(choice == 6):
         print("Generate Bill selected")
+        consumerCode = input("Enter the consumer code: ")
+        sql = "SELECT `id` FROM `consumer` WHERE `consumerCode` = "+consumerCode
+        mycursor.execute(sql)
+        result = mycursor.fetchone()
+        consumerId = result[0]
+
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        currentMonth = str(currentMonth)
+        currentYear = str(currentYear)
+
+        sql = "select SUM(`unit`) from usages where month(datetime) = '"+currentMonth+"' AND year(datetime) = '"+currentYear+"' AND `consumerid` ="+str(consumerId)
+        mycursor.execute(sql)
+        result = mycursor.fetchone()
+        sumOfUnit = result[0]
+        print("Total Unit used : ",sumOfUnit)
+        totalAmount = int(sumOfUnit)*5
+        print("Total amount: ",totalAmount)
+
+
+        sql = "INSERT INTO `bill`(`consumerid`, `month`, `year`, `bill`, `paidstatus`, `billdate`, `totalunit`) VALUES (%s,%s,%s,%s,%s,now(),%s)"
+        data = (consumerId,currentMonth,currentYear,totalAmount,'0',sumOfUnit)
+        mycursor.execute(sql,data)
+        mydb.commit()
+        print("Bill inserted successfully.")
+
+            
     elif(choice == 7):
         print("View Bill selected")
     elif(choice == 8):
