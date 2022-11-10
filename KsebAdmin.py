@@ -17,7 +17,8 @@ while(True):
     print("5. View all Consumer")
     print("6. Generate Bill")
     print("7. View Bill")
-    print("8. Exit")
+    print("8. Top two high bill paying customer")
+    print("9. Exit")
 
     choice = int(input("Enter your choice: "))
 
@@ -110,11 +111,12 @@ while(True):
         sql = "SELECT  b.`consumerid`, b.`month`, b.`year`, b.`bill`, b.`paidstatus`, b.`billdate`, b.`totalunit`, b.`duedate`, b.`invoice`,c.consumerCode,c.consumerName FROM `bill` b JOIN consumer c ON b.consumerid=c.id"
         mycursor.execute(sql)
         result = mycursor.fetchall()
-        # for i in result:
-        #     print(i)
         print(tabulate(result,headers=["ConsumerID","Month","Year","Bill","PaidStatus","BillDate","TotalUnit","DueDate","Invoice","ConsumerCode","ConsumerName"],tablefmt="psql"))
         
     elif(choice == 8):
+        print("Top two high amount bill paying consumers")
+
+    elif(choice == 9):
         print("Exit")
         break
     
