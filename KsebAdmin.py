@@ -1,3 +1,9 @@
+import mysql.connector
+
+mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'ksebdb')
+
+mycursor = mydb.cursor()
+
 while(True):
     print("Kseb Consumer Management")
     print("Select your option")
@@ -14,6 +20,16 @@ while(True):
 
     if(choice == 1):
         print("Add consumer selected")
+        consumerCode = input("Enter the consumer code: ")
+        consumerName = input("Enter the consumer name: ")
+        consumerPhone = input("Enter the consumer phone: ")
+        consumerEmail = input("Enter the consumer email id: ")
+        consumerAddress = input("Enter the consumer address: ")
+        sql = "INSERT INTO `consumer`(`consumerCode`, `consumerName`, `consumerPhone`, `consumerEmail`, `consumerAddress`) VALUES (%s,%s,%s,%s,%s)"
+        data = (consumerCode,consumerName,consumerPhone,consumerEmail,consumerAddress)
+        mycursor.execute(sql,data)
+        mydb.commit()
+        print("Data inserted successfully")
     elif(choice == 2):
         print("Search Consumer selected")
     elif(choice == 3):
