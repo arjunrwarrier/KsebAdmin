@@ -115,6 +115,15 @@ while(True):
         
     elif(choice == 8):
         print("Top two high amount bill paying consumers")
+        
+        sql = "SELECT c.consumerName,c.consumerAddress,b.`totalunit`, b.`bill` FROM bill b JOIN consumer c ON b.consumerid = c.id GROUP BY `bill` ORDER BY `bill` DESC LIMIT 0,2"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        print(tabulate(result,headers=["ConsumerName","Address","TotalUnit","Amount"],tablefmt="psql"))
+
+
+
+       
 
     elif(choice == 9):
         print("Exit")
