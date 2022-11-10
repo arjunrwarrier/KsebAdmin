@@ -47,6 +47,15 @@ while(True):
         print("Data deleted successfully.")
     elif(choice == 4):
         print("Update Consumer selected")
+        consumerCode = input("Enter the consumer code to update consumer: ")
+        consumerName = input("Enter the consumer name to update: ")
+        consumerPhone = input("Enter the consumer phone to update: ")
+        consumerEmail = input("Enter the consumer email id to update: ")
+        consumerAddress = input("Enter the consumer address to update: ")
+        sql = "UPDATE `consumer` SET `consumerName`='"+consumerName+"',`consumerPhone`='"+consumerPhone+"',`consumerEmail`='"+consumerEmail+"',`consumerAddress`='"+consumerAddress+"' WHERE `consumerCode` = "+consumerCode
+        mycursor.execute(sql)
+        mydb.commit()
+        print("Data updated successfully")
     elif(choice == 5):
         print("View All Consumer selected")
     elif(choice == 6):
