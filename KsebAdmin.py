@@ -32,6 +32,12 @@ while(True):
         print("Data inserted successfully")
     elif(choice == 2):
         print("Search Consumer selected")
+        searchOption = input("Enter the Consumer Code/Name/Phone to search: ")
+        sql = "SELECT `consumerCode`, `consumerName`, `consumerPhone`, `consumerEmail`, `consumerAddress` FROM `consumer` WHERE `consumerCode` ='"+searchOption+"'  OR `consumerName`='"+searchOption+"' OR `consumerPhone` ='"+searchOption+"' "
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        for i in result:
+            print(i)
     elif(choice == 3):
         print("Delete Consumer Selected")
     elif(choice == 4):
